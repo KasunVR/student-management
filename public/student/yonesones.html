@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List - Student Record Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #adb5bd, #e9ecef);
+        }
+        
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        
+        .animated-gradient {
+            background: linear-gradient(45deg, #0d6efd, #6610f2, #6f42c1);
+            background-size: 300% 300%;
+            animation: gradient-animation 6s ease infinite;
+            color: white;
+        }
+        
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        footer h5 {
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        footer h5:hover {
+            color: black;
+            transform: scale(1.1);
+        }
+        
+        .social-icons i {
+            font-size: 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .social-icons i:hover {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            border: 1px solid #ccc;
+        }
+
+        .dropdown-menu {
+            width: 250px;
+            background: #c1c4c5;
+        }
+        .dropdown-header {
+            text-align: center;
+            border-bottom: 1px solid #cc0505;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .dropdown-item {
+            font-weight: bold;
+          }
+        .dropdown-item:hover {
+            background: #0a0a0a;
+            color: rgb(237, 237, 243);
+            
+        }
+        .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.special-notice {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #ffc107;
+    color: #212529;
+    border: 2px solid #e0a800;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.special-notice:hover {
+    background-color: #e0a800;
+    transform: scale(1.05);
+}
+
+#notice-message {
+    font-size: 1rem;
+    border-radius: 8px;
+    animation: fade-in-out 1s ease-in-out;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Affair Division</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="sname.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Student List</a></li>
+                </ul>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="default-profile.png" alt="Profile" id="dropdownProfileImg" class="profile-img">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li class="dropdown-header text-center">
+                            <img src="default-profile.png" alt="Profile" id="dropdownProfileCardImg" class="rounded-circle mb-2" width="80" height="80">
+                            <h6 id="dropdownUsername">Loading...</h6>
+                            <small id="dropdownEmail">Loading...</small>
+                        </li>
+                                               
+                    </ul>
+                </div>               
+            </div>
+        </div>
+         <!-- Search Bar -->
+ <div class="mb-1">
+    <input type="text" id="search-bar" class="form-control" placeholder="Search student by name, year & sem...">
+</div>
+    </nav>
+
+    <div class="alert alert-warning text-center special-notice mb-4" style="cursor: pointer;">
+        <strong>Special Notice:</strong> Click here for important information about your grades.
+    </div>
+    <div id="notice-message" class="alert alert-info text-center" style="display: none;">
+        If you have any issues with your grades, please meet your lecturer or send an email to 
+        <strong>studentaffairs@gmail.com</strong> within the first week. 
+        <br><strong>Thank you!</strong>
+    </div>
+    
+
+    <div class="container mt-4">
+        <h2>Student List</h2>
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>SA Number</th>
+                    <th>Name</th>
+                    <th>Grade</th>
+                    <th>Subject</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Guardian</th>
+                </tr>
+            </thead>
+            <tbody id="student-table">
+                <!-- Student records will be dynamically populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer> 
+        <div class="row text-center py-4 mt-4 animated-gradient">
+            <div class="col-md-6 mb-3">
+                <h5>Follow Us</h5>   
+                <div class="social-icons mt-2">
+                    <a href="https://facebook.com" target="_blank" class="text-light me-3">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="text-light me-3">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="text-light me-3">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="text-light">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5>Contact Us</h5>
+                <p>Email: <a href="mailto:vle.support@studentrecord.com" class="text-warning">vle.support@studentaffair.com</a></p>
+                <p>Phone: <a href="tel:+1234567890" class="text-warning">011 456 7890</a></p>
+            </div>
+        </div>
+        <div class="row text-center py-2" style="background: #343a40; color: #adb5bd;">
+            <div class="col-12">
+                &copy; 2024 <strong>Student Affair Division</strong>. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Fetch student data and populate the table
+        $(document).ready(function() {
+            $.get('/api/yonesone', function(data) {
+                const tableBody = $('#student-table');
+                tableBody.empty(); // Clear any existing data
+
+                data.forEach(student => {
+                    const row = `<tr>
+                        <td>${student.saNumber}</td>
+                        <td>${student.name}</td>
+                        <td>${student.grade}</td>
+                        <td>${student.subject}</td>
+                        <td>${student.email}</td>
+                        <td>${student.city}</td>
+                        <td>${student.guardian}</td>
+                    </tr>`;
+                    tableBody.append(row);
+                });
+            });
+        });
+        // Filter table based on search input
+$('#search-bar').on('keyup', function () {
+        const searchText = $(this).val().toLowerCase();
+        $('#student-table tr').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
+    });
+
+    $(document).ready(function () {
+    // Load profile dropdown
+    loadProfileDropdown();
+
+    // Handle "Grades" button click event
+    $('#show-grade').on('click', function () {
+        $('#grade-list')
+            .stop(true, true) // Stop any ongoing animations
+            .fadeToggle(500); // Toggle fade in/out with 500ms animation
+    });
+});
+
+
+  // Load profile data
+function loadProfileDropdown() {
+    const apiBase = "http://localhost:3005/api"; // Your backend API base URL
+    fetch(`${apiBase}/profile`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to load user profile.");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Update profile dropdown
+            $('#dropdownProfileImg').attr('src', data.profilePicture || "default-profile.png");
+            $('#dropdownProfileCardImg').attr('src', data.profilePicture || "default-profile.png");
+            $('#dropdownUsername').text(data.username || "Unknown User");
+            $('#dropdownEmail').text(data.email || "No Email Provided");
+        })
+        .catch((err) => {
+            console.error(err.message);
+            alert("Failed to load profile dropdown. Please try again later.");
+        });
+} 
+
+$(document).ready(function () {
+    // Handle click on "Special Notice"
+    $('.special-notice').on('click', function () {
+        $('#notice-message')
+            .stop(true, true) // Stop ongoing animations
+            .fadeToggle(600); // Toggle fade-in/out effect with a smooth transition
+    });
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

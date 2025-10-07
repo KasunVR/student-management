@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Notification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #721e4f, #729be2);
+            color: rgb(241, 154, 154);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .container {
+            margin-top: 60px;
+            max-width: 700px;
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, #32721e, #8f2a98);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgb(209, 112, 112);
+        }
+
+        .btn-custom {
+            background-color: #0062cc;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #004085;
+        }
+
+        .alert {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Affair Division</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="admin.html">Back</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container">
+            <h3 class="text-center mb-4 text-light">Add New Notification</h3>
+            <form id="addNotificationForm">
+                <div class="mb-3">
+                    <label for="notificationTitle" class="form-label text-dark">Title</label>
+                    <input type="text" id="notificationTitle" class="form-control" placeholder="Enter notification title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="notificationMessage" class="form-label text-dark">Message</label>
+                    <textarea id="notificationMessage" class="form-control" rows="4" placeholder="Enter notification message" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="notificationDuration" class="form-label text-dark">Duration (in minutes)</label>
+                    <input type="number" id="notificationDuration" class="form-control" placeholder="Enter duration (e.g., 10)" min="1" required>
+                </div>
+                <button type="submit" class="btn btn-custom w-100">Add Notification</button>
+            </form>
+            <div class="alert alert-success mt-3" id="successAlert">Notification added successfully!</div>
+            <div class="alert alert-danger mt-3" id="errorAlert">Failed to add notification.</div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#addNotificationForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const newNotification = {
+                    title: $('#notificationTitle').val(),
+                    message: $('#notificationMessage').val(),
+                    duration: $('#notificationDuration').val() * 60 * 1000 // Convert minutes to milliseconds
+                };
+
+                $.ajax({
+                    url: 'http://localhost:3005/api/notification',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(newNotification),
+                    success: () => {
+                        $('#successAlert').fadeIn().delay(2000).fadeOut();
+                        $('#addNotificationForm')[0].reset();
+                    },
+                    error: () => {
+                        $('#errorAlert').fadeIn().delay(2000).fadeOut();
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

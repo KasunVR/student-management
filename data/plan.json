@@ -1,0 +1,48 @@
+[
+  {
+    "semesterPlan": "Year 1 Semester 1",
+    "studentType": "Regular Finals Only",
+    "saNumber": "sa22523776",
+    "fullName": "H.S.K.Buddhi Bhashana",
+    "subject": "MC , DCCN 1",
+    "email": "bashana@gmail.com",
+    "phonenumber": "+94775458632",
+    "paymentMethod": "Card Payment",
+    "timestamp": "2024-12-30T12:49:10.939Z",
+    "cardDetails": {
+      "cardNumber": "1234567890987654",
+      "expiryDate": "11/29",
+      "cvv": "232",
+      "fee": "26,000"
+    }
+  },
+  {
+    "semesterPlan": "Year 1 Semester 2",
+    "studentType": "Pro-rata",
+    "saNumber": "sa22334455",
+    "fullName": "A V Pathirana",
+    "subject": "ETF, SE",
+    "email": "av@gmail.com",
+    "phonenumber": "0702169976",
+    "paymentMethod": "On Bank",
+    "timestamp": "2024-12-30T12:55:06.365Z",
+    "paymentSlip": "1735563306331-Class Task 7 - JSON_AJAX.pdf"
+  },
+  {
+    "semesterPlan": "Year 2 Semester 1",
+    "studentType": "Regular Finals Only",
+    "saNumber": "sa22334458",
+    "fullName": "H.S.K.Buddhi Bhashana",
+    "subject": "CS",
+    "email": "bh@gmail.com",
+    "phonenumber": "0760733826",
+    "paymentMethod": "Card Payment",
+    "timestamp": "2024-12-30T14:14:02.666Z",
+    "cardDetails": {
+      "cardNumber": "1234567890987654",
+      "expiryDate": "02/11",
+      "cvv": "123",
+      "fee": "26,000"
+    }
+  }
+]

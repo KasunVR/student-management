@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Student Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(to right, #6f42c1, #0d6efd);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            animation: headerFadeIn 2s ease-in-out;
+        }
+
+        @keyframes headerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #fff, 0 0 20px #6f42c1;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #6f42c1, 0 0 20px #6610f2;
+            }
+            to {
+                text-shadow: 0 0 20px #6610f2, 0 0 30px #0d6efd;
+            }
+        }
+
+        .btn-logout {
+            margin-left: auto;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+        }
+
+        .dashboard {
+            margin: 20px auto;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background: linear-gradient(to bottom right, #6f42c1, #0d6efd);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            flex: 1 1 calc(33.333% - 20px);
+            min-width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+        }
+
+        .card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            background: #343a40;
+            color: #adb5bd;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <h1>Admin Dashboard</h1>
+        <p>Manage everything with ease</p>
+    
+        <!-- Buttons Section -->
+        <div class="button-group">
+            <!-- Logout Button -->
+            <a href="admins.html" class="btn btn-danger btn-help">Logout</a>
+            <a href="comments.html" class="btn btn-warning btn-help">Comments View</a>
+            <a href="pays.html" class="btn btn-success btn-help">Payment Records</a>
+        </div>
+    </div>
+    
+    <div class="dashboard container">
+        <div class="card">
+            <i class="fas fa-user-plus"></i>
+            <h3>Add Student</h3>
+            <p>Add new students to the system.</p>
+            <a href="./student/addstudent.html" class="btn btn-light btn-sm">Go to Add Student</a>
+        </div>
+        <div class="card">
+            <i class="fas fa-tasks"></i>
+            <h3>Help Center</h3>
+            <p>Viewing the Student Problems.</p>
+            <a href="helps.html" class="btn btn-light btn-sm">Help Center</a>
+        </div>
+        <div class="card">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>Lecturer Centre</h3>
+            <p>Add or delete Lecturers</p>
+            <a href="./lecturer/lecsdash.html" class="btn btn-light btn-sm">Lecturer List</a>
+        </div>
+        <div class="card">
+            <i class="fas fa-users"></i>
+            <h3>Student List</h3>
+            <p>View or edit the list of students.</p>
+            <a href="./student/studentslist.html" class="btn btn-light btn-sm">View Student List</a>
+        </div>
+        <div class="card">
+            <i class="fas fa-cogs"></i>
+            <h3>Add Event</h3>
+            <p>Add Special events of the Uni</p>
+            <a href="events.html" class="btn btn-light btn-sm">Add Event</a>
+        </div>
+        <div class="card">
+            <i class="fas fa-sign-out-alt"></i>
+            <h3>Notification Center</h3>
+            <p>Include the notification for the moodle</p>
+            <a href="notification.html" class="btn btn-light btn-sm">Notification</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Student Affair Division. All Rights Reserved.
+    </footer>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Notifications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1f4037, #99f2c8);
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: #fc9d9d !important;
+            font-weight: bold;
+        }
+
+        .back-button {
+            font-size: 1rem;
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            margin-top: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .notification-card {
+            background: linear-gradient(135deg, #d4e0a8, #d0f334);
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .notification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification-card h5 {
+            color: #f80404;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .notification-card p {
+            margin: 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .notification-time {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .notification-icon {
+            font-size: 2rem;
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar d-flex justify-content-between align-items-center p-3">
+        <a class="navbar-brand" href="#">Student Affair Division</a>
+        <button onclick="window.location.href='index.html'" class="back-button">Back to Home</button>
+    </nav>
+
+    <div class="container">
+        <h3 class="text-center mb-4 text-light">Student Notifications</h3>
+        <div id="notificationList" class="text-center">
+            <!-- Notifications will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://localhost:3005/api/notification',
+                method: 'GET',
+                success: function (data) {
+                    const notificationList = $('#notificationList');
+                    if (data.length === 0) {
+                        notificationList.html('<p class="text-muted">No notifications available.</p>');
+                    } else {
+                        data.forEach(notification => {
+                            notificationList.append(`
+                                <div class="notification-card">
+                                    <div class="notification-header">
+                                        <i class="bi bi-bell-fill notification-icon"></i>
+                                        <h5>${notification.title}</h5>
+                                    </div>
+                                    <p>${notification.message}</p>
+                                    <p class="notification-time">Posted on: ${new Date(notification.createdAt).toLocaleString()}</p>
+                                </div>
+                            `);
+                        });
+                    }
+                },
+                error: function () {
+                    $('#notificationList').html('<p class="text-danger">Failed to load notifications.</p>');
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

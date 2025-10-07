@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Enrollment Keys</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: #ffb400;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      border-color: #ffb400;
+    }
+
+    .btn-primary {
+      background-color: #ffb400;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 30px;
+      transition: background-color 0.3s;
+      color: #0f0f0f;
+    }
+
+    .btn-primary:hover {
+      background-color: #2ff5da;
+      color: #f9fbfd;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 18px;
+      color: #0f0f0f;
+      background-color: #12ddfc;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background-color: #29ac79;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .keys-display {
+      margin-top: 20px;
+    }
+
+    .key-item {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Manage Enrollment Keys</h1>
+
+  <div class="container">
+    <form id="enrollmentForm">
+      <div class="form-group">
+        <label for="key1">Year 1 Semester 1 Enrollment Key</label>
+        <input type="text" id="key1" class="form-control" placeholder="Enter key">
+      </div>
+      <div class="form-group">
+        <label for="key2">Year 1 Semester 2 Enrollment Key</label>
+        <input type="text" id="key2" class="form-control" placeholder="Enter key">
+      </div>
+      <div class="form-group">
+        <label for="key3">Year 2 Semester 1 Enrollment Key</label>
+        <input type="text" id="key3" class="form-control" placeholder="Enter key">
+      </div>
+      <div class="form-group">
+        <label for="key4">Year 2 Semester 2 Enrollment Key</label>
+        <input type="text" id="key4" class="form-control" placeholder="Enter key">
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+    </form>
+
+    <div class="keys-display" id="keysDisplay">
+        <!-- Enrollment keys will be displayed here -->
+      </div>
+  </div>
+
+  <a href="lecpanel.html" class="back-button">Back to Panel</a>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('enrollmentForm');
+      const keysDisplay = document.getElementById('keysDisplay');
+
+      // Fetch and display enrollment keys
+      function fetchEnrollmentKeys() {
+        fetch('http://localhost:3005/get-enrollment-keys')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to fetch keys');
+            }
+            return response.json();
+          })
+          .then(keys => {
+            keysDisplay.innerHTML = ''; // Clear previous content
+            Object.entries(keys).forEach(([key, value]) => {
+              const div = document.createElement('div');
+              div.className = 'key-item';
+              div.innerHTML = `<strong>${key}:</strong> ${value}`;
+              keysDisplay.appendChild(div);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching keys:', error);
+            keysDisplay.innerHTML = '<p>Failed to load keys. Please try again later.</p>';
+          });
+      }
+
+      // Handle form submission
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const enrollmentKeys = {
+          "Year 1 Semester 1 Enrollment Key": document.getElementById('key1').value,
+          "Year 1 Semester 2 Enrollment Key": document.getElementById('key2').value,
+          "Year 2 Semester 1 Enrollment Key": document.getElementById('key3').value,
+          "Year 2 Semester 2 Enrollment Key": document.getElementById('key4').value,
+        };
+
+        fetch('http://localhost:3005/save-enrollment-keys', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(enrollmentKeys),
+        })
+          .then(response => response.json())
+          .then(data => {
+            alert(data.message);
+            fetchEnrollmentKeys(); // Reload the keys after saving
+          })
+          .catch(error => {
+            console.error('Error saving keys:', error);
+            alert('Failed to save enrollment keys. Please try again.');
+          });
+      });
+
+      // Initial fetch of enrollment keys
+      fetchEnrollmentKeys();
+    });
+  </script>
+
+
+</body>
+</html>

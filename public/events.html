@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js"></script>
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        .btn-back {
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-back:hover {
+            background-color: #495057;
+        }
+        .calendar-container {
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        #calendar {
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .header-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .calendar-container {
+            border-radius: 15px;
+        }
+        .calendar-container .fc-toolbar {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            color: #333;
+        }
+        .fc-daygrid-day-top {
+            font-weight: bold;
+        }
+        .fc-event {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        .fc-event:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn-back mb-4" onclick="window.location.href='admin.html'">Back</button>
+        <div class="header-text">Manage Your Events</div>
+        <div class="calendar-container">
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        editable: true,
+        eventClick: function (info) {
+            const newTitle = prompt("Edit Event Title", info.event.title);
+            if (newTitle) {
+                info.event.setProp('title', newTitle);
+                saveEventsToBackend();
+            }
+        },
+        dateClick: function (info) {
+            const title = prompt("Enter Event Title");
+            if (title) {
+                const newEvent = { title: title, start: info.dateStr, id: Date.now().toString() }; // Ensure ID is a string
+                calendar.addEvent(newEvent);
+                saveEventsToBackend();
+            }
+        },
+        eventDidMount: function (info) {
+            info.el.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+                if (confirm("Do you want to delete this event?")) {
+                    deleteEventFromBackend(info.event.id, () => {
+                        info.event.remove(); // Remove event from calendar after backend deletion
+                    });
+                }
+            });
+        },
+    });
+
+    // Fetch and load events from the backend
+    fetch('http://localhost:3005/api/event')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch events');
+            return response.json();
+        })
+        .then(events => {
+            events.forEach(event => calendar.addEvent(event));
+        })
+        .catch(error => console.error('Error loading events:', error));
+
+    calendar.render();
+
+    function saveEventsToBackend() {
+        const events = calendar.getEvents().map(event => ({
+            id: event.id,
+            title: event.title,
+            start: event.start.toISOString(),
+            end: event.end ? event.end.toISOString() : null
+        }));
+
+        fetch('http://localhost:3005/api/event', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(events)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to save events');
+            console.log('Events saved successfully');
+        })
+        .catch(error => console.error('Error saving events:', error));
+    }
+
+    function deleteEventFromBackend(eventId, callback) {
+        fetch(`http://localhost:3005/api/event/${eventId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to delete event');
+            console.log('Event deleted successfully');
+            callback(); // Trigger callback to remove the event from the calendar
+        })
+        .catch(error => console.error('Error deleting event:', error));
+    }
+});
+    </script>
+</body>
+</html>

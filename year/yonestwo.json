@@ -1,0 +1,20 @@
+[
+  {
+    "saNumber": "sa22564867",
+    "name": "Avangi",
+    "grade": "A",
+    "subject": "DSA",
+    "email": "k@gmail.com",
+    "city": "mathugama",
+    "guardian": "mom"
+  },
+  {
+    "saNumber": "sa23654734",
+    "name": "roshal",
+    "grade": "A",
+    "subject": "ETF",
+    "email": "r@gmail.com",
+    "city": "Negombo",
+    "guardian": "daddy"
+  }
+]

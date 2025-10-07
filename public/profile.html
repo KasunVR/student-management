@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .profile-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #0d0e0d;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .profile-details p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+        .form-label {
+            color: #fff;
+            font-weight: 500;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+        }
+        .form-control:focus {
+            outline: none;
+            box-shadow: none;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .btn {
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+        .btn-secondary {
+            background-color: #2196f3;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #1e88e5;
+        }
+        .back-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .back-btn a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+        .animated-greeting span {
+    display: inline-block;
+    animation: wave-hand 1.5s infinite;
+    transform-origin: 70% 70%;
+}
+
+@keyframes wave-hand {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+.profile-picture-container {
+    position: relative;
+}
+
+#profile-picture {
+    border: 5px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    object-fit: cover;
+}
+
+label[for="profile-picture-input"] {
+    display: inline-block;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+label[for="profile-picture-input"]:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+      
+    
+    <div class="profile-card">
+        <h1>Welcome Student Profile</h1>
+        <div class="greeting-container text-center my-3">
+            <h2 id="greeting" class="animated-greeting"></h2>
+        </div> 
+        <div class="profile-picture-container text-center my-4">
+            <img id="profile-picture" class="rounded-circle" src="default-profile.png" alt="Profile Picture" width="150" height="150" />
+            <label for="profile-picture-input" class="btn btn-secondary mt-3">Edit Picture</label>
+            <input type="file" id="profile-picture-input" class="d-none" accept="image/*" />
+        </div>
+        
+        <div id="profile-container" class="profile-details">
+            <!-- Profile details will be dynamically loaded here -->
+        </div>
+        <form id="update-profile-form" class="mt-4">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required />
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" required />
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" required />
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+        </form>
+        <div class="back-btn">
+            <a href="../index.html" class="btn btn-secondary mt-3">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        const apiBase = "http://localhost:3005/api";
+
+        // Load profile data
+        function loadProfile() {
+            fetch(`${apiBase}/profile`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to load profile.");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    document.getElementById("username").value = data.username;
+                    document.getElementById("address").value = data.address;
+                    document.getElementById("phone").value = data.phone;
+                    document.getElementById("email").value = data.email;
+
+                    const greetingElement = document.getElementById("greeting");
+            greetingElement.innerHTML = `Hello, ${data.username}! <span>👋</span>`;
+        
+                    const profileContainer = document.getElementById("profile-container");
+                    profileContainer.innerHTML = `
+                        <p><strong>Username:</strong> ${data.username}</p>
+                        <p><strong>Address:</strong> ${data.address}</p>
+                        <p><strong>Phone:</strong> ${data.phone}</p>
+                        <p><strong>Email:</strong> ${data.email}</p>
+                    `;
+                })
+                .catch((err) => {
+                    alert(err.message);
+                });
+        }
+
+        // Update profile
+        document.getElementById("update-profile-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const updatedData = {
+                username: document.getElementById("username").value,
+                address: document.getElementById("address").value,
+                phone: document.getElementById("phone").value,
+                email: document.getElementById("email").value,
+            };
+
+            fetch(`${apiBase}/profile`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to update profile.");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    alert(data.message);
+                    loadProfile(); // Refresh the profile display
+                })
+                .catch((err) => {
+                    alert(err.message);
+                });
+        });
+
+        // Load profile data on page load
+        document.addEventListener("DOMContentLoaded", loadProfile);
+
+        // Handle profile picture upload
+document.getElementById("profile-picture-input").addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+
+    fetch(`${apiBase}/profile-picture`, {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to upload profile picture.");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Update the profile picture on success
+            document.getElementById("profile-picture").src = data.profilePictureUrl;
+            alert("Profile picture updated successfully!");
+        })
+        .catch((err) => {
+            alert(err.message);
+        });
+});
+// Load the user's profile picture
+function loadProfilePicture() {
+    fetch(`${apiBase}/profile-picture`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to load profile picture.");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            document.getElementById("profile-picture").src = data.profilePictureUrl || "default-profile.png";
+        })
+        .catch((err) => {
+            console.error(err.message);
+            document.getElementById("profile-picture").src = "default-profile.png"; // Fallback image
+        }); 
+}
+document.addEventListener("DOMContentLoaded", () => {
+    loadProfile();         // Load user profile data
+    loadProfilePicture();  // Load profile picture
+});
+
+    </script>
+</body>
+</html>

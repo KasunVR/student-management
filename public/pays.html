@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Student Payments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #bfd2e6, #c5f56d);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgb(122, 114, 230);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #198754, #20c997, #0d6efd);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .payment-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-card:hover {
+            background-color: #e9ecef;
+            transform: scale(1.02);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            display: block;
+            width: 100px;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #f1ac6b;
+            color: rgb(20, 20, 20);
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #adb5bd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h2>Student Payment Records</h2>
+            <p>Review all payment details below</p>
+        </div>
+
+        <!-- Payment Details -->
+        <div id="payment-list">
+            <p>Loading payment details...</p>
+        </div>
+
+        <!-- Back Button -->
+        <a href="admin.html" class="back-button">Back</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Script -->
+    <script>
+        // Function to mark payment as done and send SMS
+        async function markAsDone(index, phoneNumber, carrier) {
+            const paymentCard = document.querySelectorAll('.payment-card')[index];
+            const doneButton = paymentCard.querySelector('.done-button');
+    
+            // Update UI
+            paymentCard.style.backgroundColor = '#d1e7dd'; // Change background to indicate completion
+            doneButton.disabled = true; // Disable the button
+            doneButton.innerText = 'Done!'; // Change button text
+    
+            // Send SMS via Email Gateway
+            try {
+                const response = await fetch('/send-message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phoneNumber: phoneNumber,
+                        carrier: 'mobitel', // Pass carrier info to the backend
+                        message: 'Your payment is successful!',
+                    }),
+                });
+    
+                const result = await response.json();
+                if (result.success) {
+                    alert('Message sent successfully!');
+                } else {
+                    alert('Failed to send message.');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('An error occurred while sending the message.');
+            }
+        }
+    
+        // Fetch payment data from plan.json
+        async function fetchPayments() {
+            const paymentList = document.getElementById('payment-list');
+    
+            try {
+                const response = await fetch('/data/plan.json');
+                if (!response.ok) throw new Error('Failed to fetch payment data.');
+    
+                const payments = await response.json();
+                paymentList.innerHTML = ''; // Clear loading message
+    
+                if (payments.length === 0) {
+                    paymentList.innerHTML = '<p>No payment records found.</p>';
+                    return;
+                }
+    
+                // Display payment cards
+                payments.forEach((payment, index) => {
+                    const paymentCard = document.createElement('div');
+                    paymentCard.className = 'payment-card';
+                    paymentCard.innerHTML = `
+                        <h5>${payment.fullName}</h5>
+                        <p><strong>SA Number:</strong> ${payment.saNumber}</p>
+                        <p><strong>Email:</strong> ${payment.email}</p>
+                        <p><strong>Phone Number:</strong> ${payment.phonenumber}</p>
+                        <p><strong>Carrier:</strong> ${payment.carrier || 'Not provided'}</p>
+                        <p><strong>Semester Plan:</strong> ${payment.semesterPlan}</p>
+                        <p><strong>Student Type:</strong> ${payment.studentType}</p>
+                        <p><strong>Subject:</strong> ${payment.subject || 'N/A'}</p>
+                        <p><strong>Payment Method:</strong> ${payment.paymentMethod}</p>
+                        <p><strong>Timestamp:</strong> ${new Date(payment.timestamp).toLocaleString()}</p>
+                        ${
+                            payment.paymentMethod === 'Card Payment'
+                                ? `<p><strong>Fee:</strong> ${payment.cardDetails.fee}</p>`
+                                : payment.paymentMethod === 'On Bank'
+                                ? `<p><strong>Payment Slip:</strong> <a href="${payment.paymentSlip}" target="_blank" download>Download Slip</a></p>`
+                                : ''
+                        }
+                        <button class="done-button btn btn-success">Done</button>
+                    `;
+    
+                    paymentList.appendChild(paymentCard);
+    
+                    // Add click event to "Done" button
+                    const doneButton = paymentCard.querySelector('.done-button');
+                    doneButton.addEventListener('click', () =>
+                        markAsDone(index, payment.phonenumber, payment.carrier)
+                    );
+                });
+            } catch (error) {
+                console.error('Error fetching payments:', error);
+                paymentList.innerHTML = '<p>Failed to load payment details. Please try again later.</p>';
+            }
+        }
+    
+        // Call fetchPayments on page load
+        fetchPayments();
+    </script>
+    
+    
+</body>
+</html>

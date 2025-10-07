@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Path</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            position: relative;
+            width: 320px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #070707;
+            text-align: center;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        .card .image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease-in-out;
+        }
+        .card:hover .image {
+            transform: scale(1.1);
+        }
+        .card-content {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1;
+        }
+        .card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .card button {
+            font-size: 20px;
+            color: #fff;
+            padding: 10px 20px;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card button:hover {
+            background-color: #ff3366;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        .modal-body label {
+            color: #333;
+            font-weight: 500;
+        }
+        .modal-header, .modal-footer {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary {
+            background-color: #6a11cb;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #2575fc;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+    </style>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Back To The Home Page</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</head>
+<body>
+    
+
+<div class="container">
+    <!-- Admin Card -->
+    <div class="card">
+        <div class="image" style="background-image: url('image/IT-side.png');"></div>
+        <div class="card-content">
+            <h2>Admin Login</h2>
+            <p>Access the admin panel and manage the system.</p>
+            <button data-bs-toggle="modal" data-bs-target="#loginModal">Go to Admin Panel</button>
+        </div>
+    </div>
+
+    <!-- Lecturer Card -->
+    <div class="card">
+        <div class="image" style="background-image: url('image/lowell-1.jpg');"></div>
+        <div class="card-content">
+            <h2>Lecturer Login</h2>
+            <p>Log in to access the lecturer tools and courses.</p>
+            <button class="btn btn-primary" onclick="window.location.href='lecturer.html'">Go to Lecturer Panel</button>
+
+        </div>
+    </div>
+</div>
+<!-- Admin Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Admin Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="adminLoginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" id="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <div id="loginError" class="text-danger" style="display: none;">Invalid username or password</div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:3005/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+
+</body>
+</html>

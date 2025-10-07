@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 # student-management
 A Student Management System built with React that allows users to add, edit, view, and delete student records. This project demonstrates state management, form handling, and CRUD operations in a modern React application. Perfect for learning and demonstrating React fundamentals.
+=======
+>>>>>>> 0c2bc4e (Studentt management)
 # Student Management System
 
 A web-based student management system built with Node.js, Express, and Bootstrap.
@@ -72,4 +75,8 @@ The project uses the following environment variables:
 
 ## License
 
+<<<<<<< HEAD
 This project is licensed under the ISC License.
+=======
+This project is licensed under the ISC License.
+>>>>>>> 0c2bc4e (Studentt management)

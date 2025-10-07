@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Student Record Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        
+        body {
+            background: linear-gradient(#c1c4c5, #0dcaf0);
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+        }
+
+        .jumbotron {
+            background: #f8fafa;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            padding: 40px 20px;
+            border-radius: 8px;
+        }
+
+        .jumbotron:hover {
+            transform: scale(1.05);
+        }
+
+        .logo {
+            width: 150px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        #main-heading {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #343a40;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+
+        .btn-info {
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-info:hover {
+            background-color: #0dcaf0;
+            transform: translateY(-2px);
+            color: #ff07f3;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        #dynamic-section {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #198754;
+        }
+
+       
+        .image-container {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .zoom-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .zoom-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            visibility: hidden;
+        }
+
+        .image-container:hover .overlay-text {
+            visibility: visible;
+        }
+
+
+        /* Login Modal */
+        .modal-header {
+            background: linear-gradient(to right, #0d6efd, #6610f2);
+            color: white;
+        }
+
+        .btn-logout {
+            margin-left: auto;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+        }
+
+        .animated-gradient {
+                background: linear-gradient(45deg, #0d6efd, #6610f2, #6f42c1);
+                background-size: 300% 300%;
+                animation: gradient-animation 6s ease infinite;
+                color: white;
+            }
+    
+            @keyframes gradient-animation {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+    
+            footer h5 {
+                text-decoration: none;
+                transition: color 0.3s ease, transform 0.3s ease;
+            }
+    
+            footer h5:hover {
+                color: black;
+                transform: scale(1.1);
+            }
+    
+            .social-icons i {
+        font-size: 20px;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-icons i:hover {
+        color: #ffc107;
+        transform: scale(1.2);
+    }
+    
+        
+        .dropdown-menu {
+            width: 250px;
+            background: #c1c4c5;
+        }
+        .dropdown-header {
+            text-align: center;
+            border-bottom: 1px solid #cc0505;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .dropdown-item {
+            font-weight: bold;
+          }
+        .dropdown-item:hover {
+            background: #0a0a0a;
+            color: rgb(237, 237, 243);
+            
+        }
+        .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dropdown-header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.animated-greeting span {
+    display: inline-block;
+    animation: wave-hand 1.5s infinite;
+    transform-origin: 70% 70%;
+}
+
+@keyframes wave-hand {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .analog-clock-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .clock {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border: 5px solid #f5f8f8;
+        border-radius: 50%;
+        background: transparent;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .clock-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: url('image/c2.png'); /* Replace with your image URL */
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+    }
+
+    .clock::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 53%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background: #343a40;
+        border-radius: 50%;
+        z-index: 10;
+    }
+
+    .numbers {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .number {
+        position: absolute;
+        font-size: 14px;
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .number-12 {
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .number-3 {
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .number-6 {
+        bottom: 5px;
+        left: 52%;
+        transform: translateX(-50%);
+    }
+
+    .number-9 {
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .hour,
+    .minute,
+    .second {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform-origin: bottom;
+        transform: translate(-50%, -100%);
+        border-radius: 5px;
+    }
+
+    .hour {
+        width: 6px;
+        height: 35px;
+        background: #343a40;
+        z-index: 3;
+        top: 18%;
+    }
+
+    .minute {
+        width: 4px;
+        height: 45px;
+        background: #17a2b8;
+        z-index: 2;
+        top: 7%;
+    }
+
+    .second {
+        width: 2px;
+        height: 50px;
+        background: #dc3545;
+        z-index: 1;
+        left: 50%;
+    }
+
+    </style>
+</head>
+<body>
+
+    <audio id="background-music" autoplay loop>
+        <source src="image/1mu.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Affair Division</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutus.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="terms.html">Terms and Conditions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center" id="profileDropdown" data-bs-toggle="dropdown">
+                        <img src="default-profile.png" alt="Profile" id="dropdownProfileImg" class="profile-img">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <div class="dropdown-header profile-card text-center">
+                            <img src="default-profile.png" alt="Profile" id="dropdownProfileCardImg" class="rounded-circle mb-2" width="80" height="80">
+                            <h6 id="dropdownUsername">Loading...</h6>
+                            <small id="dropdownEmail">Loading...</small>
+                        </div>
+                        <a class="dropdown-item" href="profile.html">Profile</a>
+                        <a class="dropdown-item" href="comment.html">Comments</a>
+                        <a class="dropdown-item" href="event.html">Events</a>
+                        <a class="dropdown-item" href="plan.html">Semester Plan</a>
+                        <a class="dropdown-item text-danger  btn-logout" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+                    </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="greeting-container text-center my-3">
+        <h2 id="greeting" class="animated-greeting"></h2>
+    </div> 
+
+    <div class="container mt-4">
+        <div class="jumbotron text-center bg-light p-4 rounded position-relative">
+            <!-- Analog clock positioned at the top-right -->
+            <div class="analog-clock-container position-absolute" style="top: 10px; right: 20px;">
+                <div class="clock">
+                    <div class="clock-bg"></div>
+                    <div class="numbers">
+                        <span class="number number-12">12</span>
+                        <span class="number number-3">3</span>
+                        <span class="number number-6">6</span>
+                        <span class="number number-9">9</span>
+                    </div>
+                    <div class="hour" id="hour"></div>
+                    <div class="minute" id="minute"></div>
+                    <div class="second" id="second"></div>
+                </div>
+            </div>
+    
+            <img src="./image/logo-no-background.png" alt="Logo" class="logo"><br>
+            <h1 id="main-heading" class="text-primary">Welcome to ABSCS Uni Moodle...</h1>
+            <p class="description">Access your learning resources, stay updated, and manage your academic journey effortlessly.</p>
+            <a href="notifications.html" id="learn-more-btn" class="btn btn-info">Admin Notifications</a>
+            <a href="./notifcations/stnotifi.html" id="learn-more-btn" class="btn btn-info">Lecturer Notifications</a>
+        </div>
+    </div>
+        
+        <!-- Images Section -->
+        <div class="container mt-5">
+            <div class="d-flex justify-content-center gap-3">
+                <div class="image-container">
+                    <a href="./times/timedash.html">
+                        <img src="./image/2.png" alt="exam" class="zoom-image">
+                        <div class="overlay-text">
+                            <h5>Exam Details</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="image-container">
+                    <a href="./assignment/assignmentsdash.html">
+                        <img src="./image/3.png" alt="Add Student" class="zoom-image">
+                        <div class="overlay-text">
+                            <h5>Assignment and Submissions</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="image-container">
+                    <a href="./lecturer/lecdash.html">
+                        <img src="./image/4.png" alt="Lecture in Charge" class="zoom-image">
+                        <div class="overlay-text">
+                            <h5>Lecture in Charge</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="image-container">
+                    <a href="./student/sname.html">
+                        <img src="./image/45.png" alt="student-grade" class="zoom-image">
+                        <div class="overlay-text">
+                            <h5>Student Grade</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    
+     <!-- Footer -->
+<footer> 
+   <div class="row text-center py-4 mt-4 animated-gradient">
+       
+       <div class="col-md-6 mb-3">
+           <h5>Follow Us</h5>   
+           <div class="social-icons mt-2">
+           <a href="https://facebook.com" target="_blank" class="text-light me-3">
+               <i class="bi bi-facebook"></i>
+           </a>
+           <a href="https://twitter.com" target="_blank" class="text-light me-3">
+               <i class="bi bi-twitter"></i>
+           </a>
+           <a href="https://linkedin.com" target="_blank" class="text-light me-3">
+               <i class="bi bi-linkedin"></i>
+           </a>
+           <a href="https://instagram.com" target="_blank" class="text-light">
+               <i class="bi bi-instagram"></i>
+           </a>
+       </div>
+       </div>
+       <div class="col-md-6">
+           <h5>Contact Us</h5>
+           <p>Email: <a href="mailto:vle.support@studentrecord.com" class="text-warning">vle.support@studentaffair.com</a></p>
+           <p>Phone: <a href="tel:+1234567890" class="text-warning">011 456 7890</a></p>
+       </div>
+   </div>
+    <!-- Bottom Section -->
+<div class="row text-center py-2" style="background: #343a40; color: #adb5bd;">
+   <div class="col-12">
+   &copy; 2024 <strong>Student Affair Division</strong>. All Rights Reserved.
+       </p>
+       <p>
+           <a href="terms.html" class="text-decoration-none text-warning mx-2">Privacy Policy</a> | 
+           <a href="aboutus.html" class="text-decoration-none text-warning mx-2">Terms of Use</a>
+       </p>
+   </div> 
+</div>
+</div>
+           
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+   <script>
+    // Start music when the page loads
+window.addEventListener("DOMContentLoaded", () => {
+  const backgroundMusic = document.getElementById("background-music");
+  if (backgroundMusic) {
+    backgroundMusic.play().catch(() => {
+      console.log("User interaction may be required to play music.");
+    });
+  }
+});
+   </script>
+    <script>
+
+const apiBase = "http://localhost:3005/api"; // Your backend API base URL
+
+function loadProfileDropdown() {
+    // Fetch logged-in user's profile data
+    fetch(`${apiBase}/profile`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to load user profile.");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Update the dropdown with user's profile picture, name, and email
+            document.getElementById("dropdownProfileImg").src = data.profilePicture || "default-profile.png";
+            document.getElementById("dropdownProfileCardImg").src = data.profilePicture || "default-profile.png";
+            document.getElementById("dropdownUsername").textContent = data.username || "Unknown User";
+            document.getElementById("dropdownEmail").textContent = data.email || "No Email Provided";
+
+            const greetingElement = document.getElementById("greeting");
+            greetingElement.innerHTML = `Hello, ${data.username}! <span>👋</span>`;
+        
+        })
+        .catch((err) => {
+            console.error(err.message);
+            alert("Failed to load profile dropdown. Please try again later.");
+        });
+}
+
+// Load the dropdown data after the DOM is ready
+document.addEventListener("DOMContentLoaded", loadProfileDropdown);
+
+       $(document).ready(function () {
+            // Handle logout button click
+            $('.btn-logout').click(function () {
+                alert('You have been logged out.');
+                window.location.href = 'login.html';
+            });
+        });
+
+         
+            $('nav a').hover(function() {
+                $(this).attr('title', 'Go to ' + $(this).text() + ' page');
+            });
+
+            $('.description').on('dblclick', function() {
+                $(this).text('Double-click detected! You are exploring HTML events.');
+            });
+            
+
+            function updateAnalogClock() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+
+        const hourRotation = 30 * hours + 0.5 * minutes; // 360° / 12 hours = 30° per hour
+        const minuteRotation = 6 * minutes + 0.1 * seconds; // 360° / 60 minutes = 6° per minute
+        const secondRotation = 6 * seconds; // 360° / 60 seconds = 6° per second
+
+        document.getElementById('hour').style.transform = `rotate(${hourRotation}deg)`;
+        document.getElementById('minute').style.transform = `rotate(${minuteRotation}deg)`;
+        document.getElementById('second').style.transform = `rotate(${secondRotation}deg)`;
+    }
+
+    // Update the clock every second
+    setInterval(updateAnalogClock, 1000);
+
+    // Run the function initially
+    updateAnalogClock();
+
+
+    </script>
+</body>
+</html>

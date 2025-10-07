@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "username": "chamitha",
+    "password": "1234",
+    "address": "horana, kaluthara",
+    "phone": "0774455122",
+    "email": "ch@gmail.com",
+    "role": "student",
+    "profilePicture": "/uploads/1734453894980-new5.png.jpg"
+  },
+  {
+    "id": 3,
+    "username": "bhashana",
+    "password": "1234",
+    "address": "Nugegoda, Colombo",
+    "phone": "0701346525",
+    "email": "bh@gmail.com",
+    "role": "student",
+    "profilePicture": "/uploads/1734453017602-new3,png.jpg"
+  },
+  {
+    "id": 4,
+    "username": "user",
+    "password": "123",
+    "address": "home",
+    "phone": "0751452698",
+    "email": "user@gmail.com",
+    "role": "student",
+    "profilePicture": "/uploads/1734453547878-IT-side.png"
+  },
+  {
+    "id": 5,
+    "username": "Avangi",
+    "password": "123",
+    "address": "negombo",
+    "phone": "070216468",
+    "email": "av@gmail.com",
+    "role": "student",
+    "profilePicture": "/uploads/1734364660429-new1.png.jpg"
+  },
+  {
+    "id": 6,
+    "username": "roshal",
+    "password": "1234",
+    "address": "negombo",
+    "phone": "074521368",
+    "email": "r@gmail.com",
+    "role": "student",
+    "profilePicture": "/uploads/1734364741396-new4.png.jpg"
+  },
+  {
+    "id": 7,
+    "username": "kasun",
+    "password": "123",
+    "address": "gampaha",
+    "phone": "075413693",
+    "email": "k@gmail.com",
+    "role": "student",
+    "profilePicture": "/uploads/1734364810062-new2.png.jpg"
+  }
+]

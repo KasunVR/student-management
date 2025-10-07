@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABSCS UNI - Welcome</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #202eb1, #1e90ff, #202eb1);
+      color: #fff;
+      margin: 0;
+    }
+
+   /* Hero Section Styling */
+   .hero-section {
+  position: relative;
+  overflow: hidden; /* Ensure emojis stay within the hero section */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('./image/logo-no-background.png') no-repeat center center/cover;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Adds a dark overlay */
+  backdrop-filter: blur(10px); /* Blurs the background image */
+  z-index: 1; /* Ensure it sits below other content */
+}
+
+
+/* Overlay Content (Text and Emojis) */
+.overlay {
+  position: relative;
+  z-index: 2; /* Place above the blurred overlay */
+  text-align: center;
+}
+
+/* Animated Color Change for h1 */
+.animated-color-change {
+  font-size: 4rem;
+  font-weight: bold;
+  animation: colorChange 3s infinite;
+}
+
+/* Typing Animation */
+.animated-typing {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid rgb(238, 235, 235);
+  animation: typing 10s steps(30, end), blink 0.7s step-end infinite;
+  font-weight: bold;
+  color: #f7f1f1;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Zoom Animation */
+.zoom-animation {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0af558;
+  animation: zoomInOut 2s infinite;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+@keyframes zoomInOut {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+/* Animated Color Change for h1 */
+.animated-color-change {
+  font-size: 4rem;
+  font-weight: bold;
+  animation: colorChange 3s infinite;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Keyframes for Animations */
+@keyframes colorChange {
+  0% { color: #ff6f61; }
+  25% { color: #ffa502; }
+  50% { color: #9a9b9a; }
+  75% { color: #1e90ff; }
+  100% { color: #ff6f61; }
+}
+
+ #contact {
+    background: linear-gradient(135deg, #2614c9, #255efc, #2614c9 );
+    color: #131212;
+  }
+
+  .card{
+    background: linear-gradient(#1c1d1d, #00ff55, #18701c);
+  }
+  .card-body {
+    background: linear-gradient(#babdbd,#e1e7e4);
+  }
+  .card-title {
+    font-weight: bold;
+  }
+  .card-body p {
+    font-size: 1.1rem;
+  }
+  .card-body a {
+    text-decoration: none;
+    color: #2575fc;
+    font-weight: bold;
+  }
+  .card-body a:hover {
+    color: #6e098d;
+  }
+  .animation-container img {
+    width: 450px;
+    height: 350px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Features Section */
+#features {
+  padding: 60px 0;
+}
+
+.feature-item {
+  margin-bottom: 20px;
+}
+
+.feature-img {
+  width: 350px; /* Uniform width */
+  height: 250px; /* Uniform height */
+  object-fit: cover; /* Maintains aspect ratio and fills the size */
+  border-radius: 10px; /* Adds rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto; /* Centers the image */
+  display: block;
+}
+
+/* Hover Effect for Images */
+.feature-img:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Feature Title Styling */
+.feature-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 10px;
+  line-height: 1.5;
+  background-color: #9a9b9a;
+  background-position: re;
+}
+
+/* Animation */
+.feature-item {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    /* Special Notifications Section */
+#notifications {
+  background: linear-gradient(135deg, #0978ac, #959697); /* Light gradient background */
+  color: #333;
+  padding: 60px 0;
+}
+
+.animated-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #4a90e2;
+  animation: textGlow 2s infinite;
+}
+
+/* Notification Bar */
+.notification-bar {
+  background: #dfdddd;
+  border: 2px solid #1579ec;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #b00ff0;
+}
+
+/* Animated Image */
+.notification-image img {
+  max-width: 80%;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+/* Bounce Animation for Image */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Glowing Text Animation */
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 10px #4a90e2, 0 0 20px #4a90e2;
+  }
+  50% {
+    text-shadow: 0 0 20px #4a90e2, 0 0 40px #4a90e2;
+  }
+  100% {
+    text-shadow: 0 0 10px #4a90e2, 0 0 20px #4a90e2;
+  }
+}
+    #videos {
+      background: #1e3c72;
+      color: white;
+    }
+
+    /* Privacy Policy Section */
+#privacy {
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient background */
+  color: #fff;
+  padding: 60px 0;
+}
+
+.privacy-card {
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent card */
+  color: #333;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.privacy-card:hover {
+  transform: translateY(-10px); /* Slight lift on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+.privacy-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* Animated Title */
+.animated-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(#ffffff, #ddd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Gradient text effect */
+  animation: pulse 2s infinite;
+}
+
+/* Fade-in Animation */
+.animated-fade-in {
+  opacity: 0;
+  animation: fadeInUp 1.5s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse Animation for Title */
+@keyframes pulse {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+}
+
+   /* About Us Section */
+#about {
+  background: linear-gradient(to bottom, #202eb1, #1e3c72, #1e90ff);
+  color: white;
+  padding: 60px 20px;
+}
+
+.animated-title {
+  animation: fadeIn 2s ease-in-out;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  color: rgb(114, 240, 240);
+  font-size: 4rem;
+}
+
+.about-card {
+  background: rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.about-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #ffd700;
+  animation: bounce 2s infinite;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animated-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+    #privacy {
+      background: #333;
+      color: white;
+    }
+
+  .privacy-text {
+    font-size: 1.1rem;
+  }
+  .animation-gif {
+    width: 200px;
+    height: 300px;  
+  }
+  
+    .carousel-item img {
+  object-fit: cover;
+  height: 500px;
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+/* Falling Emojis Animation */
+.falling-emojis {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Prevent interaction */
+  overflow: hidden;
+  z-index: 3; /* Ensure emojis are above the overlay */
+}
+
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.emoji {
+  position: absolute;
+  font-size: 2rem;
+  animation: fall 5s linear infinite;
+  animation-delay: calc(var(--i) * 0.5s);
+}
+
+.falling-emojis .emoji:nth-child(1) { left: 10%; --i: 1; }
+.falling-emojis .emoji:nth-child(2) { left: 20%; --i: 2; }
+.falling-emojis .emoji:nth-child(3) { left: 50%; --i: 3; }
+.falling-emojis .emoji:nth-child(4) { left: 40%; --i: 4; }
+.falling-emojis .emoji:nth-child(5) { left: 60%; --i: 5; }
+.falling-emojis .emoji:nth-child(6) { left: 30%; --i: 6; }
+.falling-emojis .emoji:nth-child(7) { left: 70%; --i: 7; }
+.falling-emojis .emoji:nth-child(8) { left: 80%; --i: 8; }
+.falling-emojis .emoji:nth-child(9) { left: 20%; --i: 9; }
+.falling-emojis .emoji:nth-child(10) { left: 70%; --i: 10; }
+
+/* Animated Image Styling */
+.animated-image img {
+  max-width: 100%;
+  animation: float 3s ease-in-out infinite;
+ height: 100%;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+ /* Footer Styles */
+ .footer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  .footer-text {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    animation: slideUp 2s ease-in-out;
+  }
+
+  .footer-link {
+    font-size: 1rem;
+    color: #00f7ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    animation: bounce 2s infinite;
+  }
+
+  .footer-link:hover {
+    color: #ff4d4d;
+  }
+
+  /* Background Animation */
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, #ff4d4d, #4da6ff, #4dff4d, #ff4d4d);
+    background-size: 400% 400%;
+    z-index: -1;
+    animation: gradientMove 8s ease infinite;
+    opacity: 0.2;
+  }
+
+  /* Keyframes for Animations */
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+ 
+  </style>
+</head>
+<body>
+
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./image/logo-no-background.png" alt="Logo" width="100" height="40"> ABSCS UNI
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#notifications">Notifications</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#privacy">Privacy Policy</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-section text-center text-white">
+    <div class="overlay">
+      <h1 class="animated-color-change">Welcome to ABSCS UNI</h1>
+      <p class="animated-typing lead"></p>
+      <p class="zoom-animation mt-4">Join Now</p>
+    </div>
+    <div class="falling-emojis"></div>
+  </header>
+
+  <section id="about">
+    <div class="container">
+      <!-- About Us Heading -->
+      <h2 class="text-center mb-5 animated-title">About Us</h2>
+      
+      <!-- Animated Image Section -->
+      <div class="text-center mb-5">
+        <div class="animated-image">
+          <img src="./image/Gz7.gif" alt="About Animation" class="img-fluid">
+        </div>
+      </div>
+      
+      <!-- Vision and Mission Section -->
+      <div class="row">
+        <!-- Vision Section -->
+        <div class="col-md-6 text-center">
+          <div class="about-card shadow p-4 rounded">
+            <h3 class="about-icon">
+              <i class="fas fa-lightbulb"></i>
+            </h3>
+            <h3>Vision</h3>
+            <p>To be a globally recognized institution that transforms lives through education and innovation.</p>
+          </div>
+        </div>
+        <!-- Mission Section -->
+        <div class="col-md-6 text-center">
+          <div class="about-card shadow p-4 rounded">
+            <h3 class="about-icon">
+              <i class="fas fa-rocket"></i>
+            </h3>
+            <h3>Mission</h3>
+            <p>To provide exceptional learning opportunities that empower students to achieve their full potential.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="position: relative;">
+  <!-- Indicators -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+
+  <!-- Slides -->
+  <div class="carousel-inner">
+    <div class="carousel-item active" style="position: relative;">
+      <img src="image/im4.png" class="d-block w-100 rounded-3" alt="Slide 1">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Welcome to ABSCS UNI</h5>
+        <p>Discover a world of opportunities</p>
+      </div>
+    </div>
+    <div class="carousel-item" style="position: relative;">
+      <img src="image/im9.png" class="d-block w-100 rounded-3" alt="Slide 2">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>World-Class Faculty</h5>
+        <p>Learn from the best in the industry</p>
+      </div>
+    </div>
+    <div class="carousel-item" style="position: relative;">
+      <img src="image/im11.png" class="d-block w-100 rounded-3" alt="Slide 3">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>State-of-the-IT Campus</h5>
+        <p>Experience cutting-edge infrastructure</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</section>
+
+
+ <!-- Features Section -->
+<section id="features" class="container py-5">
+  <h2 class="text-center mb-4">Our Features</h2>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="feature-item">
+        <img src="image/im6.png" alt="Feature 1" class="feature-img mb-3">
+        <h4 class="feature-title">Advanced Curriculum</h4>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-item">
+        <img src="image/im22.png" alt="Feature 2" class="feature-img mb-3">
+        <h4 class="feature-title">Expert Faculty</h4>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-item">
+        <img src="./image/im34.png" alt="Feature 3" class="feature-img mb-3">
+        <h4 class="feature-title">State-of-the-IT Facilities</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+ <!-- Special Notifications Section -->
+<section id="notifications" class="bg-light py-5">
+  <div class="container">
+    <!-- Animated Color-Changing Title -->
+    <h2 class="text-center mb-4 animated-title">⭐ ⭐Special Notifications⭐ ⭐</h2>
+
+    <div class="row align-items-center">
+      <!-- Animated Image -->
+      <div class="col-md-6 text-center">
+        <div class="notification-image">
+          <img src="./image/im3.png" alt="Special Notifications" class="img-fluid animated-bounce">
+        </div>
+      </div>
+      <!-- Notification Text -->
+        
+      <div class="col-md-6">
+        
+        <div class="notification-bar p-3 shadow rounded">
+          <marquee behavior="scroll" direction="left" class="marquee-text">
+            🎓 Admissions Open! Apply Now for the Upcoming Semester. 📅
+            <img src="./image/lEG.gif" alt="About Animation" class="img-fluid">
+          </marquee>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Videos Section -->
+  <section id="videos" class="py-5">
+    <div class="container text-center">
+      <h2>University Tour</h2>
+      <video controls width="80%">
+        <source src="./image/32708-394004598_tiny.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+ <!-- Contact Us Section -->
+<section id="contact" class="container py-5">
+  <div class="row justify-content-center align-items-center">
+
+    <!-- Contact Details Card -->
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4 border-0 rounded-4">
+        <div class="card-body">
+          <h2 class="card-title mb-4 text-center">Contact Us</h2>
+          <p><i class="fas fa-envelope me-2"></i><a href="mailto:abscuni@support.lk">abscuni@support.lk</a></p>
+          <p><i class="fas fa-phone-alt me-2"></i><a href="tel:+1234567890">+94 11456 7890</a></p>
+          <p><i class="fas fa-map-marker-alt me-2"></i>31/1 Dharmasena Road, Colombo, Sri Lanka</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated Image -->
+    <div class="col-md-6 d-flex justify-content-center">
+      <div class="animation-container">
+        <img src="./image/cn.png" alt="Contact Us Animation" class="img-fluid rounded-circle shadow-lg">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+ <!-- Privacy Policy Section -->
+<section id="privacy" class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <!-- Privacy Text -->
+      <div class="col-md-6">
+        <h2 class="text-center mb-4 animated-title">Privacy Policy</h2>
+        <div class="privacy-card shadow-lg p-4 rounded animated-fade-in">
+          <p class="privacy-text">
+            Your privacy is important to us. ABSCS University ensures that your data is securely managed and only used for academic and communication purposes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Animated Image -->
+      <div class="col-md-6 d-flex justify-content-center">
+        <img src="./image/XlO9.gif" alt="About Animation" class="img-fluid shadow-lg animation-gif">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+ <!-- Footer -->
+<footer class="footer bg-dark text-white py-4">
+  <div class="container text-center">
+    <!-- Animated Logo or Text -->
+    <h3 class="footer-logo">ABSCS UNI</h3>
+    <p class="footer-text">&copy; 2024 ABSCS UNI. All Rights Reserved.</p>
+    <a href="#privacy" class="footer-link">Privacy Policy</a>
+  </div>
+</footer>
+
+ <!-- Background Music -->
+ <audio id="background-music" autoplay loop>
+  <source src="./image/Pufino - Harmony (freetouse.com).mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+  <script>
+
+  document.querySelector('.animated-typing').textContent = "Empowering the future through education...";
+
+  const emojiContainer = document.querySelector('.falling-emojis');
+  const emojis = ['🎓', '📜'];
+  for (let i = 0; i < 10; i++) {
+    const emojiElement = document.createElement('div');
+    emojiElement.classList.add('emoji');
+    emojiElement.textContent = emojis[i % emojis.length];
+    emojiContainer.appendChild(emojiElement);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.getElementById("overlay");
+            const loadButton = document.getElementById("load-button");
+            const music = document.getElementById("background-music");
+
+            // Hide the overlay and start music on button click
+            loadButton.addEventListener("click", () => {
+                overlay.style.display = "none";
+                music.play().catch(err => {
+                    console.log("Music playback requires user interaction:", err);
+                });
+            });
+        });
+</script>
+
+</body>
+</html>

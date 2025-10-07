@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Assignments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+        }
+        .navbar {
+                   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               }
+       
+               .nav-link {
+                   font-size: 1.1rem;
+                   transition: color 0.3s ease;
+               }
+       
+               .nav-link:hover {
+                   color: #ffc107 !important;
+               }
+       
+               .animated-gradient {
+                background: linear-gradient(45deg, #0d6efd, #6610f2, #6f42c1);
+                background-size: 300% 300%;
+                animation: gradient-animation 6s ease infinite;
+                color: white;
+            }
+    
+            @keyframes gradient-animation {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+    
+            footer h5 {
+                text-decoration: none;
+                transition: color 0.3s ease, transform 0.3s ease;
+            }
+    
+            footer h5:hover {
+                color: black;
+                transform: scale(1.1);
+            }
+       
+            .social-icons i {
+        font-size: 20px;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-icons i:hover {
+        color: #ffc107;
+        transform: scale(1.2);
+    }
+        h2 {
+            font-weight: bold;
+            color: #495057;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+        .status-submitted {
+            color: green;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: red;
+            font-weight: bold;
+        }
+        .submitted-file {
+            font-size: 0.9rem;
+            color: #007bff;
+        }
+        .submitted-file:hover {
+            text-decoration: underline;
+        }
+        .dropdown-menu {
+            width: 250px;
+            background: #c1c4c5;
+        }
+        .dropdown-header {
+            text-align: center;
+            border-bottom: 1px solid #cc0505;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .dropdown-item {
+            font-weight: bold;
+          }
+        .dropdown-item:hover {
+            background: #0a0a0a;
+            color: rgb(237, 237, 243);
+            
+        }
+        .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+    .gradient-header {
+        background: linear-gradient(45deg, #32f87e, #98f189, #707c2d); /* Example gradient */
+        color: rgb(17, 17, 17);
+    }
+
+    .gradient-header h4 {
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: bold;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Assignment Details</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="assignmentsdash.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Assignments</a></li>
+                </ul>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="default-profile.png" alt="Profile" id="dropdownProfileImg" class="profile-img">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li class="dropdown-header text-center">
+                            <img src="default-profile.png" alt="Profile" id="dropdownProfileCardImg" class="rounded-circle mb-2" width="80" height="80">
+                            <h6 id="dropdownUsername">Loading...</h6>
+                            <small id="dropdownEmail">Loading...</small>
+                        </li>
+                        <li><a id="show-grade" class="dropdown-item" href="#">Assignment Grades</a></li>                        
+                    </ul>
+                </div>               
+            </div>
+        </div>
+    </nav>
+    <!-- Add the Grade List Section -->
+<div id="grade-list" class="container mt-3" style="display: none;">
+    <div class="card">
+        <div class="card-header gradient-header text-center">
+            <h4>Your Assignment Grades</h4>
+        </div>        
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">Assignment 1(Individual): <strong>5%</strong></li>
+                <li class="list-group-item">Assignment 2(Group): <strong>10%</strong></li>
+                <li class="list-group-item">Assignment 3(Group): <strong>15%</strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- Assignment Table -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Assignment Submissions</h2>
+        <div class="alert alert-info text-center" role="alert">
+            <strong>Note:</strong> Submit your assignments before deadlines!
+        </div>
+ <!-- Search Bar -->
+ <div class="mb-3">
+    <input type="text" id="search-bar" class="form-control" placeholder="Search assignments by name...">
+</div>
+
+        <table class="table table-bordered table-hover mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Assignment Name</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="assignment-table">
+                <!-- Dynamic rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Submit Modal -->
+    <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="submitModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="submitModalLabel">Submit Assignment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="submit-form">
+                        <div class="mb-3">
+                            <label for="assignment-file" class="form-label">Upload Your File</label>
+                            <input type="file" class="form-control" id="assignment-file" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer> 
+        <div class="row text-center py-4 mt-4 animated-gradient">
+            
+            <div class="col-md-6 mb-3">
+                <h5>Follow Us</h5>   
+                <div class="social-icons mt-2">
+                <a href="https://facebook.com" target="_blank" class="text-light me-3">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" class="text-light me-3">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="text-light me-3">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="text-light">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </div>
+            </div>
+            <div class="col-md-6">
+                <h5>Contact Us</h5>
+                <p>Email: <a href="mailto:vle.support@studentrecord.com" class="text-warning">vle.support@studentaffair.com</a></p>
+                <p>Phone: <a href="tel:+1234567890" class="text-warning">011 456 7890</a></p>
+            </div>
+        </div>
+         <!-- Bottom Section -->
+     <div class="row text-center py-2" style="background: #343a40; color: #adb5bd;">
+        <div class="col-12">
+        &copy; 2024 <strong>Student Affair Division</strong>. All Rights Reserved.
+            </p>
+            <p>
+                <a href="terms.html" class="text-decoration-none text-warning mx-2">Privacy Policy</a> | 
+                <a href="aboutus.html" class="text-decoration-none text-warning mx-2">Terms of Use</a>
+            </p>
+        </div>
+     </div>
+     </div>
+                
+             <!-- Font Awesome -->
+             <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+         </footer>
+
+    <script>
+       $(document).ready(function () {
+    // Fetch assignments from the backend
+    function loadAssignments() {
+        $.get('/api/aonesone', function (data) {
+            const tableBody = $('#assignment-table');
+            tableBody.empty();
+            data.forEach((assignment) => {
+                const statusClass = assignment.submitted ? 'status-submitted' : 'status-pending';
+                const statusText = assignment.submitted ? 'Submitted' : 'Pending';
+
+                const fileLink = assignment.submittedFile 
+                    ? `<a href="/uploads/${assignment.submittedFile}" target="_blank" class="submitted-file">${assignment.submittedFile}</a>` 
+                    : '';
+
+                const deleteButton = assignment.submittedFile 
+                    ? `<button class="btn btn-danger btn-delete" data-assignment="${assignment.name}">Delete Submission</button>` 
+                    : '';
+
+                const row = ` 
+                    <tr>
+                        <td>${assignment.name}</td>
+                        <td>${assignment.deadline}</td>
+                        <td class="${statusClass}">${statusText}</td>
+                        <td>
+                            <button class="btn btn-success btn-submit" data-assignment="${assignment.name}">Submit</button>
+                            <div>${fileLink}</div>
+                            ${deleteButton}
+                        </td>
+                    </tr>
+                `;
+                tableBody.append(row);
+            });
+        });
+    }
+
+    loadAssignments();
+
+    // Open submit modal
+    $(document).on('click', '.btn-submit', function () {
+        const assignmentName = $(this).data('assignment');
+        $('#submitModalLabel').text(`Submit Assignment: ${assignmentName}`);
+        $('#submitModal').modal('show');
+        $('#submit-form').data('assignment', assignmentName);
+    });
+
+    // Handle form submission
+    $('#submit-form').on('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData();
+        const assignmentName = $(this).data('assignment');
+        formData.append('assignmentFile', $('#assignment-file')[0].files[0]);
+
+        $.ajax({
+            url: `/api/aonesone/${assignmentName}/submit`,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                alert(response.message);
+                $('#submitModal').modal('hide');
+                loadAssignments();
+            },
+            error: function (err) {
+                alert('Error submitting assignment: ' + err.responseJSON.message);
+            }
+        });
+    });
+
+    // Handle delete submission
+    $(document).on('click', '.btn-delete', function () {
+        const assignmentName = $(this).data('assignment');
+
+        $.ajax({
+            url: `/api/aonesone/${assignmentName}/delete`,
+            type: 'DELETE',
+            success: function (response) {
+                alert(response.message);
+                loadAssignments();
+            },
+            error: function (err) {
+                alert('Error deleting submission: ' + err.responseJSON.message);
+            }
+        });
+    });
+});
+
+// Filter table based on search input
+$('#search-bar').on('keyup', function () {
+        const searchText = $(this).val().toLowerCase();
+        $('#assignment-table tr').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
+    });
+
+    $(document).ready(function () {
+    // Load profile dropdown
+    loadProfileDropdown();
+
+    // Handle "Assignment Grades" button click
+    $('#show-grade').on('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+
+        // Toggle the grade list with fade animation
+        $('#grade-list')
+            .stop(true, true) // Stop any ongoing animations
+            .fadeToggle(500); // Toggle fade in/out with 500ms animation
+    });
+});
+
+  // Load profile data
+function loadProfileDropdown() {
+    const apiBase = "http://localhost:3005/api"; // Your backend API base URL
+    fetch(`${apiBase}/profile`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to load user profile.");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Update profile dropdown
+            $('#dropdownProfileImg').attr('src', data.profilePicture || "default-profile.png");
+            $('#dropdownProfileCardImg').attr('src', data.profilePicture || "default-profile.png");
+            $('#dropdownUsername').text(data.username || "Unknown User");
+            $('#dropdownEmail').text(data.email || "No Email Provided");
+        })
+        .catch((err) => {
+            console.error(err.message);
+            alert("Failed to load profile dropdown. Please try again later.");
+        });
+} 
+
+   </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

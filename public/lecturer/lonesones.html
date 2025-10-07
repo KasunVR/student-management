@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Lecturer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        h3 {
+            font-weight: 700;
+            color: #0c0c0c;
+            text-shadow: 1px 1px 3px rgba(243, 239, 239, 0.3);
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #080808;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .form-control::placeholder {
+            color: #d4d2d2;
+        }
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .btn-primary {
+            background: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .table {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table th {
+            background-color: #007bff;
+            color: #0f0f0f;
+            text-align: center;
+        }
+        .table td {
+            color: #0a0a0a;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .btn {
+            transition: transform 0.2s ease;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Affair Division</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="lecsdash.html">Back</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><br><br>
+
+    <div class="container">
+        <h3 class="text-center">Manage Lecturers</h3>
+        <form id="lecturerForm" class="mb-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="lecturerName" placeholder="Lecturer Name" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="lecturerSubject" placeholder="Subject" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="lecturerEmail" placeholder="Email" required>
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-primary mt-3 w-100">Add Lecturer</button>
+        </form>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Email</th>
+                    
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="lecturerTable"></tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const apiUrl = 'http://localhost:3005/api/lonesone';
+
+            const fetchLecturers = () => {
+                $.get(apiUrl, (data) => {
+                    const tableBody = $('#lecturerTable');
+                    tableBody.empty();
+                    data.forEach((lecturer) => {
+                        tableBody.append(`
+                            <tr data-id="${lecturer.id}">
+                                <td><input type="text" class="form-control" value="${lecturer.name}" disabled></td>
+                                <td><input type="text" class="form-control" value="${lecturer.subject}" disabled></td>
+                                <td><input type="text" class="form-control" value="${lecturer.email}" disabled></td>
+                               
+                                <td>
+                                    <button class="btn btn-warning btn-sm edit-btn">Edit</button>
+                                    <button class="btn btn-success btn-sm save-btn hidden">Save</button>
+                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                });
+            };
+
+            fetchLecturers();
+
+            $('#lecturerForm').submit(function (e) {
+                e.preventDefault();
+
+                const lecturer = {
+                    name: $('#lecturerName').val(),
+                    subject: $('#lecturerSubject').val(),
+                    email: $('#lecturerEmail').val(),
+                   
+                };
+
+                $.ajax({
+                    url: apiUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(lecturer),
+                    success: fetchLecturers
+                });
+            });
+
+            $('#lecturerTable').on('click', '.edit-btn', function () {
+                const row = $(this).closest('tr');
+                row.find('input').prop('disabled', false);
+                $(this).addClass('hidden');
+                row.find('.save-btn').removeClass('hidden');
+            });
+
+            $('#lecturerTable').on('click', '.save-btn', function () {
+                const row = $(this).closest('tr');
+                const id = row.data('id');
+                const updatedDetails = {
+                    name: row.find('input:eq(0)').val(),
+                    subject: row.find('input:eq(1)').val(),
+                    email: row.find('input:eq(2)').val(),
+                    
+                };
+
+                $.ajax({
+                    url: `${apiUrl}/${id}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedDetails),
+                    success: fetchLecturers
+                });
+            });
+
+            $('#lecturerTable').on('click', '.delete-btn', function () {
+                const id = $(this).closest('tr').data('id');
+                $.ajax({
+                    url: `${apiUrl}/${id}`,
+                    method: 'DELETE',
+                    success: fetchLecturers
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+[
+  {
+    "username": "charunika",
+    "password": "1234",
+    "email": "charu@gmail.com",
+    "address": "Haguranketha",
+    "phone": "0774455122",
+    "profileImage": "/uploads/1734527900018-new.2.png.jpeg"
+  },
+  {
+    "username": "gayana",
+    "password": "1234",
+    "email": "gayana@gmail.com",
+    "address": "colombo",
+    "phone": "075633244",
+    "profileImage": "/uploads/1734527931773-new.1.png.jpeg"
+  },
+  {
+    "username": "Pubudu",
+    "password": "1234",
+    "email": "pubudu@gmail.com",
+    "address": "Nugegoda, Colombo",
+    "phone": "0785521336",
+    "profileImage": "/uploads/1734447676107-3.png"
+  },
+  {
+    "username": "yasas",
+    "password": "1234",
+    "email": "yasas@gmail.com",
+    "address": "gampaha",
+    "phone": "074521369"
+  },
+  {
+    "username": "chamith",
+    "password": "1234",
+    "email": "chamith@gmail.com",
+    "address": "Dehiatthakandiya",
+    "phone": "0754456231",
+    "profileImage": "/uploads/1734528561428-new.3.png.jpeg"
+  }
+]

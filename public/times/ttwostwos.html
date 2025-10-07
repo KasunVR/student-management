@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Timetable</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef2f3, #d1f5e8);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .table {
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom {
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-custom:hover {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            display: none;
+        }
+
+        
+        .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Affair Division</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="timesdash.html">Back</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <img src="https://via.placeholder.com/150" alt="Profile" id="profile-image" class="profile-img">
+                </div>
+            </div>
+        </div>
+       <!-- Search Bar -->
+ <div class="mb-1">
+    <input type="text" id="search-bar" class="form-control" placeholder="Search subject, year & sem...">
+</div>
+    </nav>
+    
+
+    <div class="container">
+        <h2 class="text-center mb-4">Manage Timetable</h2>
+
+        <form id="addTimetableForm" class="mb-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="date" id="timetableDate" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="time" id="timetableTime" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="timetableSubject" class="form-control" placeholder="Subject" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="timetableVenue" class="form-control" placeholder="Venue" required>
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-success btn-custom mt-3">Add Timetable</button>
+        </form>
+
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Subject</th>
+                    <th>Venue</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="timetableTableBody"></tbody>
+        </table>
+
+        <div class="alert alert-success" id="successAlert">Action successful!</div>
+        <div class="alert alert-danger" id="errorAlert">Something went wrong. Please try again.</div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const apiUrl = 'http://localhost:3005/api/ttwostwo';
+
+            // Fetch timetable data
+            const fetchTimetable = () => {
+                $.get(apiUrl, (data) => {
+                    const tableBody = $('#timetableTableBody');
+                    tableBody.empty();
+                    data.forEach((entry) => {
+                        tableBody.append(`
+                            <tr data-id="${entry.id}">
+                                <td><input type="date" class="form-control editable readonly" value="${entry.date}" disabled></td>
+                                <td><input type="time" class="form-control editable readonly" value="${entry.time}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${entry.subject}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${entry.venue}" disabled></td>
+                                
+                                <td>
+                                    <button class="btn btn-warning btn-sm edit-btn">Edit</button>
+                                    <button class="btn btn-success btn-sm save-btn hidden">Save</button>
+                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                });
+            };
+
+            fetchTimetable();
+
+            // Add a new timetable entry
+            $('#addTimetableForm').submit(function (e) {
+                e.preventDefault();
+                const timetable = {
+                    date: $('#timetableDate').val(),
+                    time: $('#timetableTime').val(),
+                    subject: $('#timetableSubject').val(),
+                    venue: $('#timetableVenue').val(),
+                   
+                };
+
+                $.ajax({
+                    url: apiUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(timetable),
+                    success: function () {
+                        $('#addTimetableForm')[0].reset();
+                        fetchTimetable();
+                        showAlert('success', 'Timetable added successfully!');
+                    },
+                    error: function () {
+                        showAlert('error', 'Failed to add timetable.');
+                    },
+                });
+            });
+
+            const showAlert = (type, message) => {
+                const alert = type === 'success' ? $('#successAlert') : $('#errorAlert');
+                alert.text(message).fadeIn().delay(3000).fadeOut();
+            };
+       
+
+        // Edit Timetable
+        $('#timetableTableBody').on('click', '.edit-btn', function () {
+                const row = $(this).closest('tr');
+                row.find('.editable').prop('disabled', false).removeClass('readonly');
+                row.find('.edit-btn').addClass('hidden');
+                row.find('.save-btn').removeClass('hidden');
+            });
+
+            // Save Edited Timetable
+            $('#timetableTableBody').on('click', '.save-btn', function () {
+                const row = $(this).closest('tr');
+                const id = row.data('id');
+                const updatedTimetable = {
+                    date: row.find('input:eq(0)').val(),
+                    time: row.find('input:eq(1)').val(),
+                    subject: row.find('input:eq(2)').val(),
+                    venue: row.find('input:eq(3)').val(),
+                    
+                };
+
+                $.ajax({
+                    url: `${apiUrl}/${id}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedTimetable),
+                    success: () => {
+                        fetchTimetable();
+                    },
+                });
+            });
+
+            // Delete Timetable
+            $('#timetableTableBody').on('click', '.delete-btn', function () {
+                const id = $(this).closest('tr').data('id');
+                $.ajax({
+                    url: `${apiUrl}/${id}`,
+                    method: 'DELETE',
+                    success: () => {
+                        fetchTimetable();
+                    },
+                });
+            });
+        });
+        
+        // Search functionality
+$('#search-bar').on('keyup', function () {
+    const value = $(this).val().toLowerCase();
+    $('#timetableTableBody tr').filter(function () {
+        const rowText = $(this).find('input').map(function () {
+            return $(this).val().toLowerCase();
+        }).get().join(' ');
+        $(this).toggle(rowText.indexOf(value) > -1);
+    });
+});
+
+$(document).ready(function () {
+        const apiBase = "http://localhost:3005"; // Adjust this to your backend base URL
+
+        // Load the lecturer's profile image
+        function loadProfileImage() {
+            $.get(`${apiBase}/api/profiles`, function (data) {
+                if (data && data.profileImage) {
+                    $('#profile-image').attr('src', data.profileImage);
+                } else {
+                    $('#profile-image').attr('src', 'https://via.placeholder.com/150'); // Fallback image
+                }
+            }).fail(function () {
+                console.error("Error loading profile image.");
+                $('#profile-image').attr('src', 'https://via.placeholder.com/150'); // Fallback in case of error
+            });
+        }
+
+        // Call the function to load the profile image
+        loadProfileImage();
+    });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

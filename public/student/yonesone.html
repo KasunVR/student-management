@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student - Student Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .table {
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom {
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-custom:hover {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            display: none;
+        }
+
+        .editable {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .readonly {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .edit-btn, .delete-btn, .save-btn {
+            font-weight: bold;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-btn:hover, .save-btn:hover, .delete-btn:hover {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #f44336;
+        }
+
+        .save-btn {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #ffeb3b;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Affair Division</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="studentslist.html">Back</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Search Bar -->
+ <div class="mb-1">
+    <input type="text" id="search-bar" class="form-control" placeholder="Search student by name, year & sem...">
+</div>
+    </nav>
+
+    <div class="container">
+        <h2 class="text-center mb-4">Edit Student Information</h2>
+
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>SA number</th>
+                    <th>Name</th>
+                    <th>Grade</th>
+                    <th>Subject</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Guardian</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody"></tbody>
+        </table>
+
+        <div class="alert alert-success" id="successAlert">Action successful!</div>
+        <div class="alert alert-danger" id="errorAlert">Something went wrong. Please try again.</div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const apiUrl = 'http://localhost:3005/api/yonesone'; // Your API endpoint for students
+
+            // Fetch student data from JSON file
+            const fetchStudents = () => {
+                $.get(apiUrl, (data) => {
+                    const tableBody = $('#studentTableBody');
+                    tableBody.empty();
+                    data.forEach((student) => {
+                        tableBody.append(`
+                            <tr data-id="${student.saNumber}">
+                                <td><input type="text" class="form-control editable readonly" value="${student.saNumber}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${student.name}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${student.grade}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${student.subject}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${student.email}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${student.city}" disabled></td>
+                                <td><input type="text" class="form-control editable readonly" value="${student.guardian}" disabled></td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm edit-btn">Edit</button>
+                                    <button class="btn btn-success btn-sm save-btn hidden">Save</button>
+                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                });
+            };
+
+            fetchStudents();
+
+            // Edit student info
+            $('#studentTableBody').on('click', '.edit-btn', function () {
+                const row = $(this).closest('tr');
+                row.find('.editable').prop('disabled', false).removeClass('readonly');
+                row.find('.edit-btn').addClass('hidden');
+                row.find('.save-btn').removeClass('hidden');
+            });
+
+            // Save edited student info
+            $('#studentTableBody').on('click', '.save-btn', function () {
+                const row = $(this).closest('tr');
+                const id = row.data('id');
+                const updatedStudent = {
+                    saNumber: row.find('input:eq(0)').val(),
+                    name: row.find('input:eq(1)').val(),
+                    grade: row.find('input:eq(2)').val(),
+                    subject: row.find('input:eq(3)').val(),
+                    email: row.find('input:eq(4)').val(),
+                    city: row.find('input:eq(5)').val(),
+                    guardian: row.find('input:eq(6)').val(),
+                };
+
+                $.ajax({
+                    url: `${apiUrl}/${id}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedStudent),
+                    success: () => {
+                        fetchStudents();
+                    },
+                    error: () => {
+                        alert('Failed to save student information.');
+                    }
+                });
+            });
+
+            // Delete student
+            $('#studentTableBody').on('click', '.delete-btn', function () {
+                const id = $(this).closest('tr').data('id');
+                $.ajax({
+                    url: `${apiUrl}/${id}`,
+                    method: 'DELETE',
+                    success: () => {
+                        fetchStudents();
+                    },
+                    error: () => {
+                        alert('Failed to delete student.');
+                    },
+                });
+            });
+        });
+         // Search functionality
+$('#search-bar').on('keyup', function () {
+    const value = $(this).val().toLowerCase();
+    $('#studentTableBody tr').filter(function () {
+        const rowText = $(this).find('input').map(function () {
+            return $(this).val().toLowerCase();
+        }).get().join(' ');
+        $(this).toggle(rowText.indexOf(value) > -1);
+    });
+});
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
