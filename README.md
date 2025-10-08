@@ -74,9 +74,6 @@ The project uses the following environment variables:
 5. Open a Pull Request
 
 ## License
+ISC License
 
-<<<<<<< HEAD
-This project is licensed under the ISC License.
-=======
-This project is licensed under the ISC License.
->>>>>>> 0c2bc4e (Studentt management)
+Copyright (c) 2025, [Kasun Kumara(s)]
